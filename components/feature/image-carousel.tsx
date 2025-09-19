@@ -15,7 +15,7 @@ export function ImageCarousel({ images }: { images: string[] }) {
                     alt="Product image"
                     fill
                     style={{ objectFit: 'contain' }}
-                    priority // Gambar utama harus dimuat cepat
+                    priority
                 />
             </div>
             <div className="flex gap-2 mt-2">

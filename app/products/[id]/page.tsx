@@ -2,10 +2,8 @@
 import { getProduct, getProducts } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import { ImageCarousel } from '@/components/feature/image-carousel';
-import Image from 'next/image';
 
 export async function generateStaticParams() {
-    // Pra-render 10 halaman pertama saat build
     const products = await getProducts();
     return products.slice(0, 10).map((product) => ({
         id: product.id.toString(),

@@ -11,8 +11,6 @@ export default async function ProductsPage({
     searchParams: Promise<{ category?: string; sort?: string; }>;
 }) {
     const { category, sort } = await searchParams;
-
-    // Ambil kedua data secara paralel
     const [products, categories] = await Promise.all([
         getProducts(category, sort),
         getCategories()
