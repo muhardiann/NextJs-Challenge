@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tech Challenge: Product Page Optimisation
 
-## Getting Started
+A web application built with Next.js to display a product list from an API, with a primary focus on front-end performance optimization in line with Core Web Vitals metrics (TTFB, FCP, TTI).
 
-First, run the development server:
+## Key Features
 
+-   **Product Listing Page (`/products`):**
+    -   Displays all products from the API.
+    -   Filters products by category.
+    -   Sorts products by price (Lowest / Highest).
+    -   Filter and sorting state is stored in the URL (`searchParams`), making it bookmarkable and shareable.
+
+-   **Product Detail Page (`/products/[id]`):**
+    -   Displays the complete details of a single product.
+    -   Interactive image carousel for the product gallery.
+    -   Information on price, description, brand, and stock availability status.
+
+## Performance Optimization Strategy
+
+As per the challenge request, several methods have been implemented to reduce load times:
+
+-   **Static Site Generation (SSG) & ISR:** The product detail pages are pre-rendered at build time using `generateStaticParams` for an extremely fast **TTFB (Time to First Byte)**. Data is kept fresh using **Incremental Static Regeneration (ISR)**.
+
+-   **React Server Components (RSC):** Most components, especially those that perform data fetching, are Server Components. This drastically reduces the size of the JavaScript bundle sent to the client, improving **TTI (Time to Interactive)**.
+
+-   **Streaming UI with `loading.tsx`:** Utilizes loading skeletons that are displayed instantly during navigation or data fetching. This improves **FCP (First Contentful Paint)** and the overall user experience.
+
+-   **Image Optimization with `next/image`:** All product images (both thumbnails and in the carousel) use the `<Image>` component for automatic size optimization, modern formats (WebP), and prevention of layout shift.
+
+-   **Font Optimization with `next/font`:** Fonts are self-hosted to eliminate external network requests and prevent layout shift.
+
+-   **Parallel Data Fetching**: On the product listing page, data for products and categories are fetched in parallel to minimize network waterfalls.
+
+## Technology Used
+
+-   Next.js 14+ (App Router)
+-   React 18+
+-   TypeScript
+-   Tailwind CSS
+
+## Running the Project Locally
+
+### Prerequisites
+Ensure you have **Node.js version 18.17** or newer.
+
+### Installation
+Clone this repository and install all the required dependencies.
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Running the Development Server
+Run the command below to start the development server.
+```bash
+npm run dev
+```
+Open http://localhost:3000 in your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Data Source
+This project uses the public API from dummyjson.com/products.
